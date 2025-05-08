@@ -57,6 +57,7 @@ function App() {
             <th>Wersja</th>
             <th>Data wydania</th>
             <th>Ilość pobrań</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
