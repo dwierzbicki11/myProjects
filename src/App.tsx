@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Sprawdzenie ścieżki do pliku JSON w konsoli
         console.log("Fetching files.json...");
 
         const response = await fetch('/myProjects/files.json');
