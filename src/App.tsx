@@ -17,7 +17,7 @@ function App() {
         // Sprawdzenie ścieżki do pliku JSON w konsoli
         console.log("Fetching files.json...");
 
-        const response = await fetch('/files.json');
+        const response = await fetch('/myProjects/files.json');
         
         // Sprawdzenie, czy odpowiedź jest poprawna
         if (!response.ok) {
