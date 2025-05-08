@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [files, setFiles] = useState<any[]>([]);
   const [downloadCounts, setDownloadCounts] = useState<any>({});
+
   const getDownloadCountsFromLocalStorage = () => {
     const storedCounts = localStorage.getItem('downloadCounts');
     return storedCounts ? JSON.parse(storedCounts) : {};
@@ -12,11 +13,27 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/files.json');
-      const data = await response.json();
+      try {
+        // Sprawdzenie ścieżki do pliku JSON w konsoli
+        console.log("Fetching files.json...");
 
-      setFiles(data);
-      setDownloadCounts(getDownloadCountsFromLocalStorage());
+        const response = await fetch('/files.json');
+        
+        // Sprawdzenie, czy odpowiedź jest poprawna
+        if (!response.ok) {
+          console.error("Failed to fetch files.json");
+          return;
+        }
+
+        const data = await response.json();
+
+        console.log("Fetched data:", data); // Logowanie danych z pliku JSON
+
+        setFiles(data);
+        setDownloadCounts(getDownloadCountsFromLocalStorage());
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     fetchData();
@@ -44,24 +61,30 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {files.map((file, idx) => (
-            <tr key={file.id}>
-              <td>{file.id}</td>
-              <td>{file.name}</td>
-              <td>{file.size}</td>
-              <td>{file.version}</td>
-              <td>{file.releaseDate}</td>
-              <td>
-                <span className="me-2">{downloadCounts[file.id] || 0}</span>
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleDownload(file.id, file.downloadUrl)}
-                >
-                  Pobierz
-                </button>
-              </td>
+          {files.length > 0 ? (
+            files.map((file, idx) => (
+              <tr key={file.id}>
+                <td>{file.id}</td>
+                <td>{file.name}</td>
+                <td>{file.size}</td>
+                <td>{file.version}</td>
+                <td>{file.releaseDate}</td>
+                <td>
+                  <span className="me-2">{downloadCounts[file.id] || 0}</span>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleDownload(file.id, file.downloadUrl)}
+                  >
+                    Pobierz
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6}>Brak danych do wyświetlenia</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
