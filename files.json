@@ -1,5 +1,5 @@
 [
-    {
+  {
     "id": 1,
     "name": "SortsMethods",
     "size": "12KB",
@@ -7,6 +7,6 @@
     "releaseDate": "2025-05-14",
     "downloads": 0,
     "type": "Library",
-    "downloadUrl": "https://github.com/dwierzbicki11/files/blob/main/SortsMethods.dll"
+    "downloadUrl": "https://raw.githubusercontent.com/dwierzbicki11/files/main/SortsMethods.dll"
   }
 ]
